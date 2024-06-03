@@ -10,7 +10,7 @@ public record UserRegisterDto(
         String name,
         @NotBlank
         @Size(max=200, min = 13, message = "Min mail size is 13 and max 150!")
-        String mail,
+        String email,
         @NotBlank
         @Size(max=20, min = 6, message = "Min password size 6 and max 30!")
         String password,
