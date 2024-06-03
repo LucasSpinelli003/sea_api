@@ -18,5 +18,10 @@ public class ErrorHandler {
     public ResponseEntity error400(){
         return ResponseEntity.notFound().build();
     }
+    @ExceptionHandler(Error.class)
+    public ResponseEntity error401(){
+        return ResponseEntity.notFound().build();
+    }
+
 
 }

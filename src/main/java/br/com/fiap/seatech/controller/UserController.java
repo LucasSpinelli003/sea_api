@@ -1,9 +1,6 @@
 package br.com.fiap.seatech.controller;
 
-import br.com.fiap.seatech.dto.user.UserDetailDto;
-import br.com.fiap.seatech.dto.user.UserListDto;
-import br.com.fiap.seatech.dto.user.UserRegisterDto;
-import br.com.fiap.seatech.dto.user.UserUpdateDto;
+import br.com.fiap.seatech.dto.user.*;
 import br.com.fiap.seatech.model.User;
 import br.com.fiap.seatech.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -29,6 +26,19 @@ public class UserController {
         var uri = uriBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new UserDetailDto(user));
+    }
+
+    @PostMapping("/authenticate")
+    @Transactional
+    public ResponseEntity<UserAuthenticateDetailDto> authenticate(@RequestBody @Valid UserValidation dto){
+        var user = userRepository.searchByEmail(dto.mail());
+        if(user == null){
+            return (ResponseEntity<UserAuthenticateDetailDto>) ResponseEntity.notFound();
+        }
+        if(!user.getPassword().equals(dto.password())){
+            return (ResponseEntity<UserAuthenticateDetailDto>) ResponseEntity.noContent();
+        }
+        return ResponseEntity.ok(new UserAuthenticateDetailDto(user));
     }
 
     @GetMapping
@@ -57,5 +67,6 @@ public class UserController {
         userRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
 
 }

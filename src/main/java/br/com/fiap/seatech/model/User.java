@@ -20,8 +20,8 @@ public class User {
     @Column(name = "nm_usuario" ,length = 1500, nullable = false)
     private String name;
 
-    @Column(name = "ds_email", length = 200, nullable = false)
-    private String mail;
+    @Column(name = "ds_email", length = 200, unique = true ,nullable = false)
+    private String email;
 
     @Column(name="ds_senha",length = 20, nullable = false)
     private String password;
@@ -37,7 +37,7 @@ public class User {
 
     public User(UserRegisterDto dto) {
         name = dto.name();
-        mail = dto.mail();
+        email = dto.email();
         password = dto.password();
         type = dto.type();
         localization = dto.localization();
@@ -49,8 +49,8 @@ public class User {
         if(dto.name() != null){
             name = dto.name();
         }
-        if(dto.mail() != null){
-            mail = dto.mail();
+        if(dto.email() != null){
+            email = dto.email();
         }
         if(dto.password() != null){
             password = dto.password();
