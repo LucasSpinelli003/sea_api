@@ -1,9 +1,11 @@
-package br.com.fiap.seatech.model;
+package br.com.fiap.seatech.domain;
 
 import br.com.fiap.seatech.dto.user.UserRegisterDto;
 import br.com.fiap.seatech.dto.user.UserUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -34,6 +36,9 @@ public class User {
 
     @Column(name = "ds_foto_perfil", nullable = false)
     private String avatar;
+
+    @OneToMany(mappedBy = "user")
+    private List<Fishing> fishings;
 
     public User(UserRegisterDto dto) {
         name = dto.name();

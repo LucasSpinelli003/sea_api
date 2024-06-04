@@ -1,6 +1,6 @@
 package br.com.fiap.seatech.dto.user;
 
-import br.com.fiap.seatech.model.User;
+import br.com.fiap.seatech.domain.User;
 
 public record UserAuthenticateDetailDto(Long id, String name, String email,String type, String localization, String avatar ) {
 

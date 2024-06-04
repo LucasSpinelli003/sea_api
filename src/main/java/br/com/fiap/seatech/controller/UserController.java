@@ -1,7 +1,11 @@
 package br.com.fiap.seatech.controller;
 
+import br.com.fiap.seatech.domain.Fishing;
+import br.com.fiap.seatech.dto.fishing.FishingDetailDto;
+import br.com.fiap.seatech.dto.fishing.FishingRegisterDto;
 import br.com.fiap.seatech.dto.user.*;
-import br.com.fiap.seatech.model.User;
+import br.com.fiap.seatech.domain.User;
+import br.com.fiap.seatech.repository.FishingRepository;
 import br.com.fiap.seatech.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -17,6 +21,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FishingRepository fishingRepository;
 
     @PostMapping
     @Transactional
@@ -28,8 +34,18 @@ public class UserController {
         return ResponseEntity.created(uri).body(new UserDetailDto(user));
     }
 
+    @PostMapping("{userId}/fishing")
+    @Transactional
+    public ResponseEntity<FishingDetailDto> createFishing(@PathVariable Long userId, @RequestBody @Valid FishingRegisterDto dto, UriComponentsBuilder uriBuilder){
+        var user = userRepository.getReferenceById(userId);
+        var fishing = new Fishing(dto, user);
+        fishingRepository.save(fishing);
+        var uri = uriBuilder.path("/users/fishing/{id}").buildAndExpand(fishing.getId()).toUri();
+        return ResponseEntity.created(uri).body(new FishingDetailDto(fishing));
+    }
+
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody @Valid UserValidation dto){
+    public ResponseEntity<?> authenticate(@RequestBody @Valid UserValidationDto dto){
         var user = userRepository.searchByEmail(dto.email());
         if(user == null){
             return ResponseEntity.notFound().build();

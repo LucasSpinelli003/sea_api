@@ -1,10 +1,8 @@
 package br.com.fiap.seatech.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
-public record UserValidation(
+public record UserValidationDto(
         @NotBlank
         String email,
         @NotBlank
