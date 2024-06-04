@@ -29,14 +29,13 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    @Transactional
-    public ResponseEntity<UserAuthenticateDetailDto> authenticate(@RequestBody @Valid UserValidation dto){
-        var user = userRepository.searchByEmail(dto.mail());
+    public ResponseEntity<?> authenticate(@RequestBody @Valid UserValidation dto){
+        var user = userRepository.searchByEmail(dto.email());
         if(user == null){
-            return (ResponseEntity<UserAuthenticateDetailDto>) ResponseEntity.notFound();
+            return ResponseEntity.notFound().build();
         }
         if(!user.getPassword().equals(dto.password())){
-            return (ResponseEntity<UserAuthenticateDetailDto>) ResponseEntity.noContent();
+            return ResponseEntity.status(401).build();
         }
         return ResponseEntity.ok(new UserAuthenticateDetailDto(user));
     }
