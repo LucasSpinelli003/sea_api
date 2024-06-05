@@ -6,9 +6,11 @@ import br.com.fiap.seatech.dto.fishing.FishingRegisterDto;
 import br.com.fiap.seatech.dto.user.*;
 import br.com.fiap.seatech.domain.User;
 import br.com.fiap.seatech.repository.FishingRepository;
+import br.com.fiap.seatech.repository.MeetRepository;
 import br.com.fiap.seatech.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.hibernate.validator.constraints.ParameterScriptAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private FishingRepository fishingRepository;
+    @Autowired
+    private MeetRepository meetRepository;
 
     @PostMapping
     @Transactional
@@ -33,6 +37,19 @@ public class UserController {
 
         return ResponseEntity.created(uri).body(new UserDetailDto(user));
     }
+
+    @PutMapping("{userId}/meets/{meetId}")
+    @Transactional
+    public ResponseEntity<UserListDto> addMeet(@PathVariable Long userId, @PathVariable Long meetId ){
+        var user = userRepository.getReferenceById(userId);
+        var meet = meetRepository.getReferenceById(meetId);
+        user.getMeets().add(meet);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new UserListDto(user));
+
+    }
+
 
     @PostMapping("{userId}/fishing")
     @Transactional
