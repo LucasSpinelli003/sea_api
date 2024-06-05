@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor @NoArgsConstructor
 
 @Entity
-@Table(name = "tb_pescarias")
+@Table(name = "tb_pescaria")
 public class Fishing {
 
     @Id

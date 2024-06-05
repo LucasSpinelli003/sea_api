@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor @NoArgsConstructor
 
 @Entity
-    @Table(name = "tb_capturas")
+@Table(name = "tb_captura")
 public class Catch {
 
     @Id
@@ -28,7 +28,7 @@ public class Catch {
     @Column(name = "ds_foto")
     private String picture;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "cd_pescaria", nullable = false)
     private Fishing fishing;
 
