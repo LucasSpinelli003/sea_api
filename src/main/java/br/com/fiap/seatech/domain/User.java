@@ -5,7 +5,9 @@ import br.com.fiap.seatech.dto.user.UserUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -39,6 +41,12 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Fishing> fishings;
+
+    @ManyToMany
+    @JoinTable(name="TB_ENCONTRO_USER",
+            joinColumns = @JoinColumn(name="cd_usuario"),
+            inverseJoinColumns = @JoinColumn(name="cd_encontro"))
+    private Set<Meet> meets = new HashSet<>();
 
     public User(UserRegisterDto dto) {
         name = dto.name();
