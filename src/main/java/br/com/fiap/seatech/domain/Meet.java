@@ -3,6 +3,7 @@ package br.com.fiap.seatech.domain;
 
 import br.com.fiap.seatech.dto.catchh.CatchRegisterDto;
 import br.com.fiap.seatech.dto.meet.MeetRegisterDto;
+import br.com.fiap.seatech.dto.meet.MeetUpdateDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,15 +32,30 @@ public class Meet {
     private String local;
 
     @Column(name = "ds_status", length = 50 ,nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToMany(mappedBy = "meets")
     private List<User> users;
+
+    @OneToMany(mappedBy = "meet")
+    private List<Offer> offers;
 
     public Meet(MeetRegisterDto dto) {
         date = dto.date();
         local = dto.local();
         status = dto.status();
+    }
 
+    public void update(MeetUpdateDto dto){
+        if(dto.date() != null){
+            date = dto.date();
+        }
+        if(dto.local() != null){
+            local = dto.local();
+        }
+        if(dto.status() != null){
+            status = dto.status();
+        }
     }
 }
