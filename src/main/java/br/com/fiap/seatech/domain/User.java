@@ -43,7 +43,7 @@ public class User {
     private List<Fishing> fishings;
 
     @ManyToMany
-    @JoinTable(name="TB_ENCONTRO_USER",
+    @JoinTable(name="TB_ENCONTRO_USUARIO",
             joinColumns = @JoinColumn(name="cd_usuario"),
             inverseJoinColumns = @JoinColumn(name="cd_encontro"))
     private Set<Meet> meets = new HashSet<>();
