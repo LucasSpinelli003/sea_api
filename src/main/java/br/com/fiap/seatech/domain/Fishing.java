@@ -1,14 +1,13 @@
 package br.com.fiap.seatech.domain;
 
 import br.com.fiap.seatech.dto.fishing.FishingRegisterDto;
-import br.com.fiap.seatech.dto.user.UserRegisterDto;
+import br.com.fiap.seatech.dto.fishing.FishingUpdateDto;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.sql.Clob;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -39,14 +38,14 @@ public class Fishing {
     @Column(name = "ds_metodo_pesca",length = 100, nullable = false)
     private String fishingMethod;
 
-    @Column(name = "ds_detalhes", nullable = false)
+    @Column(name = "ds_detalhes", length = 300, nullable = false)
     private String details;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cd_usuario", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "fishing")
+    @OneToMany(mappedBy = "fishing", cascade = CascadeType.ALL)
     private List<Catch> catchs;
 
     public Fishing(FishingRegisterDto dto, User user) {
@@ -57,5 +56,26 @@ public class Fishing {
         fishingMethod = dto.fishingMethod();
         details = dto.details();
         this.user = user;
+    }
+
+    public void update(FishingUpdateDto dto) {
+        if(dto.date() != null){
+            date = dto.date();
+        }
+        if(dto.localization() != null){
+            localization = dto.localization();
+        }
+        if(dto.climateConditions() != null){
+            climateConditions = dto.climateConditions();
+        }
+        if(dto.fishing() != null){
+            fishing = dto.fishing();
+        }
+        if(dto.fishingMethod() != null){
+            fishingMethod = dto.fishingMethod();
+        }
+        if(dto.details() != null){
+            details = dto.details();
+        }
     }
 }

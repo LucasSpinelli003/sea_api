@@ -16,12 +16,13 @@ public record FishingRegisterDto(
         @Size(max =300, min =5 , message = "Max localization size is 300 and min 5 !")
         String localization,
         @NotBlank
-        @Size(max =50, min =3 , message = "Max localization size is 300 and min 5 !")
+        @Size(max =50, min =3 , message = "Max fishing size is 300 and min 3 !")
         String fishing,
         @NotBlank
-        @Size(max = 100, min =5 , message = "Max fishing method size is and min !")
+        @Size(max = 100, min =5 , message = "Max fishing method size is and min 5!")
         String fishingMethod,
         @NotBlank
+        @Size(max = 300, min =5 , message = "Max details method size is and min 5!")
         String details
 ) {}
 
