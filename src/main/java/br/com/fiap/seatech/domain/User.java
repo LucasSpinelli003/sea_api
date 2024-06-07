@@ -39,7 +39,7 @@ public class User {
     @Column(name = "ds_foto_perfil", nullable = false)
     private String avatar;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Fishing> fishings;
 
     @ManyToMany
