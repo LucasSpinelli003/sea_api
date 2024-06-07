@@ -35,10 +35,10 @@ public class Meet {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToMany(mappedBy = "meets")
+    @ManyToMany(mappedBy = "meets", cascade = CascadeType.REMOVE)
     private List<User> users;
 
-    @OneToMany(mappedBy = "meet")
+    @OneToMany(mappedBy = "meet", cascade = CascadeType.ALL)
     private List<Offer> offers;
 
     public Meet(MeetRegisterDto dto) {
