@@ -34,7 +34,7 @@ public class Offer {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cd_encontro", nullable = false)
     private Meet meet;
 

@@ -5,7 +5,9 @@ import br.com.fiap.seatech.domain.Fishing;
 import br.com.fiap.seatech.dto.catchh.CatchDetailDto;
 import br.com.fiap.seatech.dto.catchh.CatchRegisterDto;
 import br.com.fiap.seatech.dto.fishing.FishingDetailDto;
+import br.com.fiap.seatech.dto.fishing.FishingListDto;
 import br.com.fiap.seatech.dto.fishing.FishingRegisterDto;
+import br.com.fiap.seatech.dto.fishing.FishingUpdateDto;
 import br.com.fiap.seatech.dto.user.*;
 import br.com.fiap.seatech.domain.User;
 import br.com.fiap.seatech.repository.CatchRepository;
@@ -37,6 +39,28 @@ public class FishingController {
         catchRepository.save(catchObject);
         var uri = uriBuilder.path("/fishings/catch/{id}").buildAndExpand(catchObject.getId()).toUri();
         return ResponseEntity.created(uri).body(new CatchDetailDto(catchObject));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FishingListDto>> list(Pageable pageable){
+        var list = fishingRepository.findAll().stream().map(FishingListDto::new).toList();
+        return ResponseEntity.ok(list);
+    }
+
+    @PutMapping("{fishingId}")
+    @Transactional
+    public ResponseEntity<FishingDetailDto> update(@PathVariable Long fishingId , @RequestBody FishingUpdateDto dto){
+        var fishing = fishingRepository.getReferenceById(fishingId);
+        fishing.update(dto);
+        fishingRepository.save(fishing);
+        return ResponseEntity.ok(new FishingDetailDto(fishing));
+    }
+
+    @DeleteMapping("{id}")
+    @Transactional
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+        fishingRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -1,6 +1,7 @@
 package br.com.fiap.seatech.domain;
 
 import br.com.fiap.seatech.dto.catchh.CatchRegisterDto;
+import br.com.fiap.seatech.dto.catchh.CatchUpdateDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class Catch {
     @Column(name = "ds_foto")
     private String picture;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cd_pescaria", nullable = false)
     private Fishing fishing;
 
@@ -40,4 +41,15 @@ public class Catch {
         this.fishing = fishing;
     }
 
+    public void update(CatchUpdateDto dto) {
+        if(dto.quantity() != null){
+            quantity = dto.quantity();
+        }
+        if(dto.weigth() != null){
+            weight = dto.weigth();
+        }
+        if(dto.picture() != null){
+            picture = dto.picture();
+        }
+    }
 }

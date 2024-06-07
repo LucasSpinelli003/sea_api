@@ -82,5 +82,12 @@ public class MeetController {
         return ResponseEntity.ok(lista);
     }
 
+    @DeleteMapping("offers/{id}")
+    @Transactional
+    public ResponseEntity<Void> deleteOffer(@PathVariable("id") Long id){
+        offerRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
