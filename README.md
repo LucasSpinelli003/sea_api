@@ -14,5 +14,9 @@
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
+### Modelo de requisições
+```
+acessível na pasta insomniaRequests
+```
 
 
