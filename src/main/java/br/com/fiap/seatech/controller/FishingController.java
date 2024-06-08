@@ -43,7 +43,7 @@ public class FishingController {
 
     @GetMapping
     public ResponseEntity<List<FishingListDto>> list(Pageable pageable){
-        var list = fishingRepository.findAll().stream().map(FishingListDto::new).toList();
+        var list = fishingRepository.findAll(pageable).stream().map(FishingListDto::new).toList();
         return ResponseEntity.ok(list);
     }
 

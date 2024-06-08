@@ -21,7 +21,7 @@ public class CatchController {
 
     @GetMapping
     public ResponseEntity<List<CatchListDto>> list(Pageable pageable){
-        var list = catchRepository.findAll().stream().map(CatchListDto::new).toList();
+        var list = catchRepository.findAll(pageable).stream().map(CatchListDto::new).toList();
         return ResponseEntity.ok(list);
     }
 
